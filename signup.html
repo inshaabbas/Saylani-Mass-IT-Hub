@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saylani Mass IT Hub — Sign Up</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="auth-page">
+  <div class="auth-card">
+
+    <!-- Left brand panel -->
+    <div class="auth-left">
+      <div class="brand-logo">
+        <svg width="110" height="34" viewBox="0 0 140 42" xmlns="http://www.w3.org/2000/svg">
+          <rect width="38" height="38" rx="6" fill="white" fill-opacity="0.15"/>
+          <text x="7" y="27" font-family="Arial" font-weight="800" font-size="18" fill="white">SMIT</text>
+          <text x="46" y="17" font-family="Arial" font-weight="700" font-size="11" fill="white">Saylani Mass</text>
+          <text x="46" y="31" font-family="Arial" font-weight="700" font-size="11" fill="rgba(255,255,255,0.85)">IT Hub</text>
+        </svg>
+      </div>
+      <h2>Join Campus Portal</h2>
+      <p>Create your account to access Lost &amp; Found, Complaints, and Events.</p>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="auth-right">
+      <h3>Create Account</h3>
+      <p class="subtitle">Fill in the details below to get started.</p>
+
+      <form id="signupForm" autocomplete="off">
+        <div class="form-group">
+          <label class="form-label" for="signupName">Full Name</label>
+          <input type="text" id="signupName" name="name" class="form-control"
+                 placeholder="Your full name" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signupEmail">Email Address</label>
+          <input type="email" id="signupEmail" name="email" class="form-control"
+                 placeholder="you@example.com" required />
+          <small style="color:#666; font-size:0.75rem; margin-top:3px; display:block;">
+            Admin emails: admin@saylani.org or smit@saylani.org
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" name="password" class="form-control"
+                 placeholder="At least 6 characters" required minlength="6" />
+        </div>
+
+        <button type="submit" class="btn-primary-custom">Create Account</button>
+      </form>
+
+      <p class="auth-link" style="margin-top:12px;">
+        Already have an account? <a href="index.html">Log in</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+  import { setupSignupPage } from "./js/auth.js";
+  setupSignupPage();
+</script>
+
+</body>
+</html>

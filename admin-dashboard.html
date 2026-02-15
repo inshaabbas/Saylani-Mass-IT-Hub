@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saylani Admin Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="dashboard-wrapper">
+
+  <!-- =============================================
+       ADMIN SIDEBAR
+       ============================================= -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <svg width="100" height="30" viewBox="0 0 140 42" xmlns="http://www.w3.org/2000/svg">
+        <rect width="38" height="38" rx="6" fill="#0057a8" fill-opacity="0.15"/>
+        <text x="7" y="27" font-family="Arial" font-weight="800" font-size="18" fill="#0057a8">SMIT</text>
+        <text x="46" y="17" font-family="Arial" font-weight="700" font-size="10" fill="#0057a8">Saylani Mass</text>
+        <text x="46" y="30" font-family="Arial" font-weight="700" font-size="10" fill="#66b032">IT Hub</text>
+      </svg>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Admin Panel</div>
+      <a href="#" class="nav-link" data-section="dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        Dashboard
+      </a>
+      <a href="#" class="nav-link" data-section="lostfound">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        Lost &amp; Found
+      </a>
+      <a href="#" class="nav-link" data-section="complaints">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Complaints
+      </a>
+      <a href="#" class="nav-link" data-section="volunteers">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        Volunteers
+      </a>
+      <a href="#" class="nav-link" data-section="notifications">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+        </svg>
+        Notifications
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar" style="background:var(--blue-light); color:var(--blue);" id="adminAvatar">A</div>
+        <div>
+          <div class="fw-600 fs-sm" id="adminName">Admin</div>
+          <div class="text-muted" style="font-size:0.72rem">Administrator</div>
+        </div>
+      </div>
+      <button id="logoutBtn" class="btn-outline btn-sm w-100" style="margin-top:10px;">Logout</button>
+    </div>
+  </aside>
+
+  <!-- =============================================
+       MAIN CONTENT
+       ============================================= -->
+  <div class="main-content">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <span class="topbar-title" id="pageTitle">Admin Dashboard</span>
+      <div class="topbar-right">
+        <span class="text-muted fs-sm" id="topbarUser"></span>
+        <div style="position:relative;">
+          <div class="notif-bell" id="notifBell">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <span class="notif-badge" id="notifBadge" style="display:none">0</span>
+          </div>
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-header">
+              Notifications
+              <button id="markAllRead" style="background:none;border:none;color:var(--blue);font-size:0.78rem;cursor:pointer;font-weight:600;">Mark all read</button>
+            </div>
+            <div class="notif-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- ===========================
+           SECTION: ADMIN DASHBOARD
+           =========================== -->
+      <div class="section active" id="section-dashboard">
+
+        <!-- Admin Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+            </div>
+            <div class="stat-value" id="statUsers">0</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon red">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+            </div>
+            <div class="stat-value" id="statOpenComplaints">0</div>
+            <div class="stat-label">Open Complaints</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <div class="stat-value" id="statLFPending">0</div>
+            <div class="stat-label">LF Items Pending</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div class="stat-value" id="statVolunteers">0</div>
+            <div class="stat-label">Active Volunteers</div>
+          </div>
+        </div>
+
+        <!-- Broadcast Announcement -->
+        <div class="card-panel">
+          <div class="card-panel-title" style="margin-bottom:14px;">📢 Send Announcement to All Users</div>
+          <div style="display:flex; gap:10px;">
+            <input type="text" id="broadcastMsg" class="form-control"
+                   placeholder="Type your announcement message..." style="flex:1" />
+            <button id="broadcastBtn" class="btn-blue" style="white-space:nowrap">Send to All</button>
+          </div>
+        </div>
+
+        <!-- Quick summary tables -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <div class="card-panel">
+            <div class="card-panel-title" style="margin-bottom:12px;">📋 Complaints Management</div>
+            <div id="dashboardComplaintsTable">
+              <div class="spinner-wrap"><div class="spinner"></div></div>
+            </div>
+          </div>
+          <div class="card-panel">
+            <div class="card-panel-title" style="margin-bottom:12px;">🔍 Recent LF Reports</div>
+            <div id="dashboardLFTable">
+              <div class="spinner-wrap"><div class="spinner"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===========================
+           SECTION: LOST & FOUND (Admin)
+           =========================== -->
+      <div class="section" id="section-lostfound">
+        <div class="card-panel">
+          <div class="card-panel-header">
+            <div class="card-panel-title">🔍 All Lost &amp; Found Reports</div>
+          </div>
+          <div id="adminLFTable">
+            <div class="spinner-wrap"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===========================
+           SECTION: COMPLAINTS (Admin)
+           =========================== -->
+      <div class="section" id="section-complaints">
+        <div class="card-panel">
+          <div class="card-panel-header">
+            <div class="card-panel-title">📋 All Complaints</div>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-bar" style="margin-bottom:16px;">
+            <span class="text-muted fs-sm fw-600">Filter:</span>
+            <select id="filterStatus" class="form-control">
+              <option value="all">All Status</option>
+              <option value="Submitted">Submitted</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+            <select id="filterCategory" class="form-control">
+              <option value="all">All Categories</option>
+              <option value="Internet">Internet</option>
+              <option value="Electricity">Electricity</option>
+              <option value="Water">Water</option>
+              <option value="Maintenance">Maintenance</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div id="adminComplaintsTable">
+            <div class="spinner-wrap"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===========================
+           SECTION: VOLUNTEERS (Admin)
+           =========================== -->
+      <div class="section" id="section-volunteers">
+        <div class="card-panel">
+          <div class="card-panel-header">
+            <div class="card-panel-title">🎗 All Volunteer Registrations</div>
+          </div>
+          <div id="adminVolunteersTable">
+            <div class="spinner-wrap"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===========================
+           SECTION: NOTIFICATIONS (Admin)
+           =========================== -->
+      <div class="section" id="section-notifications">
+        <div class="card-panel">
+          <div class="card-panel-header">
+            <div class="card-panel-title">🔔 Notifications</div>
+            <button class="btn-outline btn-sm" onclick="document.getElementById('markAllRead').click()">Mark all read</button>
+          </div>
+          <div id="adminNotifList">
+            <div class="empty-state"><p>No notifications.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end page-content -->
+  </div><!-- end main-content -->
+</div><!-- end dashboard-wrapper -->
+
+<script type="module" src="js/adminDashboard.js"></script>
+
+</body>
+</html>

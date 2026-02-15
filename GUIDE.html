@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SMIT Portal — Complete Hackathon Guide</title>
+<style>
+  :root {
+    --green: #66b032; --blue: #0057a8; --white: #fff;
+    --gray-50: #f8f9fa; --gray-100: #f1f3f5; --gray-200: #e9ecef;
+    --gray-700: #495057; --gray-900: #212529;
+    --code-bg: #1e1e2e; --code-text: #cdd6f4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--gray-50); color: var(--gray-900); line-height: 1.6; }
+  
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    color: white; padding: 48px 40px; text-align: center;
+  }
+  .page-header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  .page-header p { opacity: 0.85; font-size: 1rem; }
+  
+  /* Layout */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  
+  /* Sections */
+  .guide-section {
+    background: white; border-radius: 12px; padding: 28px 32px;
+    margin-bottom: 20px; border-left: 4px solid var(--green);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .guide-section.blue { border-left-color: var(--blue); }
+  .guide-section h2 {
+    font-size: 1.2rem; font-weight: 700; color: var(--gray-900);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .guide-section h3 { font-size: 1rem; font-weight: 600; color: var(--blue); margin: 16px 0 8px; }
+  .guide-section p { font-size: 0.92rem; color: var(--gray-700); margin-bottom: 10px; }
+  
+  /* Steps */
+  .steps { counter-reset: step-counter; }
+  .step {
+    display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start;
+  }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--green); color: white; font-size: 0.8rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+  }
+  .step.blue .step-num { background: var(--blue); }
+  .step-body { flex: 1; font-size: 0.9rem; color: var(--gray-700); }
+  .step-body strong { color: var(--gray-900); }
+  
+  /* Code blocks */
+  pre {
+    background: var(--code-bg); color: var(--code-text);
+    border-radius: 8px; padding: 16px 18px; font-size: 0.82rem;
+    overflow-x: auto; margin: 10px 0 14px; line-height: 1.7;
+    font-family: 'Courier New', Consolas, monospace;
+  }
+  code { font-family: 'Courier New', Consolas, monospace; }
+  .inline-code {
+    background: var(--gray-100); color: var(--blue); padding: 2px 6px;
+    border-radius: 4px; font-size: 0.83rem; font-family: monospace;
+  }
+  
+  /* Timeline */
+  .timeline { display: flex; flex-direction: column; gap: 10px; }
+  .timeline-item {
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .hour-badge {
+    background: var(--blue); color: white; border-radius: 6px;
+    padding: 4px 10px; font-size: 0.78rem; font-weight: 700; white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .hour-badge.green { background: var(--green); }
+  .timeline-content { font-size: 0.9rem; color: var(--gray-700); }
+  .timeline-content strong { color: var(--gray-900); display: block; margin-bottom: 2px; }
+  
+  /* File tree */
+  .file-tree {
+    background: var(--code-bg); border-radius: 8px; padding: 16px 18px;
+    font-family: monospace; font-size: 0.84rem; color: var(--code-text);
+    line-height: 1.8;
+  }
+  .file-tree .folder { color: #cba6f7; }
+  .file-tree .file { color: #a6e3a1; }
+  .file-tree .comment { color: #6c7086; }
+  
+  /* Data flow */
+  .flow-row {
+    display: flex; align-items: center; gap: 8px; margin: 8px 0;
+    font-size: 0.88rem; flex-wrap: wrap;
+  }
+  .flow-box {
+    background: var(--green); color: white; padding: 6px 14px;
+    border-radius: 6px; font-weight: 600; font-size: 0.82rem;
+  }
+  .flow-box.blue { background: var(--blue); }
+  .flow-box.gray { background: var(--gray-200); color: var(--gray-700); }
+  .flow-arrow { font-size: 1.1rem; color: var(--gray-700); }
+  
+  /* Rules table */
+  .rules-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; }
+  .rules-table th { background: var(--gray-100); padding: 8px 12px; text-align: left; font-weight: 700; font-size: 0.78rem; color: var(--gray-700); }
+  .rules-table td { padding: 8px 12px; border-bottom: 1px solid var(--gray-200); color: var(--gray-700); }
+  
+  /* Badges */
+  .badge { display: inline-flex; padding: 3px 10px; border-radius: 20px; font-size: 0.76rem; font-weight: 600; gap: 4px; }
+  .badge.green { background: #e8f5d9; color: var(--green); }
+  .badge.blue { background: #e0eef8; color: var(--blue); }
+  .badge.orange { background: #fff3e0; color: #e65100; }
+  
+  /* Tip box */
+  .tip-box {
+    background: #fff3e0; border-left: 3px solid #e65100;
+    border-radius: 6px; padding: 12px 16px; margin: 10px 0; font-size: 0.88rem;
+  }
+  .tip-box.info { background: #e0eef8; border-left-color: var(--blue); }
+  .tip-box strong { color: #c45000; }
+  .tip-box.info strong { color: var(--blue-dark, #003f7a); }
+  
+  /* TOC */
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+  .toc a {
+    background: var(--gray-100); color: var(--blue); padding: 6px 14px;
+    border-radius: 20px; font-size: 0.82rem; font-weight: 600; text-decoration: none;
+    transition: background .2s;
+  }
+  .toc a:hover { background: var(--blue); color: white; }
+  
+  /* Footer */
+  .page-footer {
+    background: var(--gray-900); color: rgba(255,255,255,0.7);
+    text-align: center; padding: 20px; font-size: 0.82rem; margin-top: 32px;
+  }
+  .page-footer strong { color: var(--green); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>🏫 Saylani Mass IT Hub — Campus Portal</h1>
+  <p>Complete Hackathon Guide · Firebase + Vanilla JS · 6 Hours</p>
+</div>
+
+<div class="container">
+
+  <!-- Table of Contents -->
+  <div class="guide-section" style="border-left-color: #ccc;">
+    <h2>📑 Table of Contents</h2>
+    <div class="toc">
+      <a href="#files">File Structure</a>
+      <a href="#firebase">Firebase Setup</a>
+      <a href="#auth">Authentication</a>
+      <a href="#lostfound">Lost & Found</a>
+      <a href="#complaints">Complaints</a>
+      <a href="#volunteer">Volunteer</a>
+      <a href="#notifications">Notifications</a>
+      <a href="#realtime">Real-time</a>
+      <a href="#rules">Security Rules</a>
+      <a href="#timeline">6-Hour Plan</a>
+      <a href="#dataflow">Data Flow</a>
+    </div>
+  </div>
+
+  <!-- FILE STRUCTURE -->
+  <div class="guide-section" id="files">
+    <h2>📁 File Structure (What Each File Does)</h2>
+    <div class="file-tree">
+      <div><span class="folder">📁 saylani-portal/</span></div>
+      <div>&nbsp;&nbsp;<span class="file">index.html</span> <span class="comment">← Login page</span></div>
+      <div>&nbsp;&nbsp;<span class="file">signup.html</span> <span class="comment">← Registration page</span></div>
+      <div>&nbsp;&nbsp;<span class="file">user-dashboard.html</span> <span class="comment">← Student dashboard (all 4 features)</span></div>
+      <div>&nbsp;&nbsp;<span class="file">admin-dashboard.html</span> <span class="comment">← Admin panel (manage all data)</span></div>
+      <div>&nbsp;&nbsp;<span class="folder">📁 css/</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">style.css</span> <span class="comment">← All styles (Saylani branding, layout)</span></div>
+      <div>&nbsp;&nbsp;<span class="folder">📁 js/</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">firebase.js</span> <span class="comment">← Firebase config & init (edit config here!)</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">auth.js</span> <span class="comment">← Login, Signup, Role check, Redirect</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">userDashboard.js</span> <span class="comment">← Controls user-dashboard.html</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">adminDashboard.js</span> <span class="comment">← Controls admin-dashboard.html</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">lostfound.js</span> <span class="comment">← Submit, listen, update LF items</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">complaints.js</span> <span class="comment">← Submit, listen, update complaints</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">volunteer.js</span> <span class="comment">← Register for events, show registrations</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">notifications.js</span> <span class="comment">← Create, listen, mark read notifications</span></div>
+    </div>
+    <p style="margin-top:12px;">All JS files use <span class="inline-code">import/export</span> (ES Modules). Each file has one responsibility.</p>
+  </div>
+
+  <!-- FIREBASE SETUP -->
+  <div class="guide-section blue" id="firebase">
+    <h2>🔥 Step 1 — Firebase Setup (Baby Steps)</h2>
+
+    <div class="steps">
+      <div class="step blue">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Go to firebase.google.com</strong><br>
+          Click "Go to Console" → Click "Add Project" → Name it <span class="inline-code">saylani-portal</span> → Click Continue (disable Google Analytics if asked) → Create Project.
+        </div>
+      </div>
+      <div class="step blue">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Enable Email/Password Authentication</strong><br>
+          Left sidebar → Authentication → Get Started → Sign-in method tab → Email/Password → Enable → Save.
+        </div>
+      </div>
+      <div class="step blue">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Create Firestore Database</strong><br>
+          Left sidebar → Firestore Database → Create Database → Start in test mode → Choose a region → Done.
+        </div>
+      </div>
+      <div class="step blue">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Create the "users" Collection</strong><br>
+          In Firestore → Start Collection → ID: <span class="inline-code">users</span> → Add your first document manually with fields: <span class="inline-code">name, email, role: "admin"</span> for the admin account.
+        </div>
+      </div>
+      <div class="step blue">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>Get Your Firebase Config</strong><br>
+          Project Settings (gear icon) → Your Apps → Web app (click &lt;/&gt;) → Register App → Copy the config object.
+        </div>
+      </div>
+      <div class="step blue">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <strong>Paste config into js/firebase.js</strong><br>
+          Open <span class="inline-code">js/firebase.js</span> and replace the <span class="inline-code">firebaseConfig</span> object with your actual values.
+        </div>
+      </div>
+    </div>
+
+    <h3>Your Firebase Config (goes in firebase.js)</h3>
+    <pre>const firebaseConfig = {
+  apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXX",
+  authDomain: "saylani-portal.firebaseapp.com",
+  projectId: "saylani-portal",
+  storageBucket: "saylani-portal.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc123"
+};</pre>
+
+    <h3>Firestore Collections to Create</h3>
+    <table class="rules-table">
+      <tr><th>Collection</th><th>Purpose</th><th>Key Fields</th></tr>
+      <tr><td><span class="inline-code">users</span></td><td>Store user profiles & roles</td><td>name, email, role</td></tr>
+      <tr><td><span class="inline-code">lost_found_items</span></td><td>Lost & Found reports</td><td>title, type, status, userId</td></tr>
+      <tr><td><span class="inline-code">complaints</span></td><td>Student complaints</td><td>title, category, status, userId</td></tr>
+      <tr><td><span class="inline-code">volunteers</span></td><td>Event registrations</td><td>eventTitle, userId, availability</td></tr>
+      <tr><td><span class="inline-code">notifications</span></td><td>Real-time alerts</td><td>message, userId, read</td></tr>
+    </table>
+  </div>
+
+  <!-- AUTHENTICATION -->
+  <div class="guide-section" id="auth">
+    <h2>🔑 Step 2 — Role-Based Authentication</h2>
+    <p>The system has two roles: <span class="badge green">user</span> (student) and <span class="badge blue">admin</span>. Role is saved in Firestore when signing up.</p>
+
+    <h3>How Roles Work</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">User signs up → <span class="inline-code">auth.js</span> creates Firebase Auth account → saves to <span class="inline-code">users</span> collection with <span class="inline-code">role: "user"</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">If email matches admin emails list → <span class="inline-code">role: "admin"</span> is assigned automatically</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">On login → role is read from Firestore → redirect to correct dashboard</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">Each dashboard calls <span class="inline-code">protectPage("user")</span> or <span class="inline-code">protectPage("admin")</span> → wrong role = redirect</div>
+      </div>
+    </div>
+
+    <h3>How to Make Someone Admin</h3>
+    <p><strong>Option 1:</strong> Add their email to the <span class="inline-code">ADMIN_EMAILS</span> array in <span class="inline-code">auth.js</span> before they sign up.</p>
+    <p><strong>Option 2:</strong> In Firestore Console → users collection → find their document → change <span class="inline-code">role</span> field to <span class="inline-code">"admin"</span> manually.</p>
+  </div>
+
+  <!-- LOST & FOUND -->
+  <div class="guide-section" id="lostfound">
+    <h2>🔍 Step 3 — Lost & Found Module</h2>
+
+    <h3>Firestore Document Structure</h3>
+    <pre>// Collection: lost_found_items
+{
+  title: "Black Wallet",        // Item name
+  description: "Found near library",
+  type: "found",                // "lost" or "found"
+  category: "Matters",
+  location: "Library",
+  imageURL: "https://...",      // Optional uploaded image
+  userId: "uid123",             // Who reported it
+  userName: "Ahmed Ali",
+  status: "Pending",            // "Pending" or "Found"
+  createdAt: Timestamp
+}</pre>
+
+    <h3>Keyword Matching (Simple)</h3>
+    <p>When a new item is submitted, <span class="inline-code">lostfound.js</span> extracts words from the title (length > 3) and checks if any existing item's title contains those words. If matched → both users get a notification.</p>
+
+    <div class="tip-box">
+      <strong>💡 Example:</strong> User A posts "Lost Wallet" → User B posted "Found Wallet" → System finds "wallet" match → Both get notified!
+    </div>
+
+    <h3>User vs Admin</h3>
+    <table class="rules-table">
+      <tr><th>Action</th><th>User</th><th>Admin</th></tr>
+      <tr><td>See items</td><td>Own items only</td><td>All items</td></tr>
+      <tr><td>Submit item</td><td>✅ Yes</td><td>❌ No (admin manages)</td></tr>
+      <tr><td>Update status</td><td>❌ No</td><td>✅ Yes (Pending → Found)</td></tr>
+    </table>
+  </div>
+
+  <!-- COMPLAINTS -->
+  <div class="guide-section blue" id="complaints">
+    <h2>📋 Step 4 — Complaints Module</h2>
+
+    <h3>Firestore Document Structure</h3>
+    <pre>// Collection: complaints
+{
+  title: "WiFi Not Working",
+  category: "Internet",         // Internet | Electricity | Water | Maintenance
+  description: "No internet in Lab 3",
+  location: "Computer Lab",
+  urgency: "High",              // Low | Medium | High
+  userId: "uid123",
+  userName: "Ahmed Ali",
+  status: "Submitted",          // Submitted → In Progress → Resolved
+  createdAt: Timestamp
+}</pre>
+
+    <h3>Status Flow (Admin controls this)</h3>
+    <div class="flow-row">
+      <div class="flow-box gray">Submitted</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box blue">In Progress</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box green">Resolved</div>
+    </div>
+    <p>Each status change triggers a notification to the user who filed the complaint.</p>
+  </div>
+
+  <!-- VOLUNTEER -->
+  <div class="guide-section" id="volunteer">
+    <h2>🎗 Step 5 — Volunteer Module</h2>
+
+    <h3>Firestore Document Structure</h3>
+    <pre>// Collection: volunteers
+{
+  name: "Ahmed Ali",
+  email: "ahmed@email.com",
+  phone: "0312-1234567",
+  eventId: "community-cleanup",
+  eventTitle: "Community Cleanup",
+  availability: "Full Day",     // Full Day | Morning | Afternoon | Evening
+  skills: "First Aid, Driving",
+  userId: "uid123",
+  userName: "Ahmed Ali",
+  status: "Registered",
+  createdAt: Timestamp
+}</pre>
+
+    <div class="tip-box info">
+      <strong>ℹ️ Note:</strong> The system checks if a user already registered for an event. If yes, it shows "Already registered!" instead of submitting twice.
+    </div>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="guide-section blue" id="notifications">
+    <h2>🔔 Step 6 — Notifications System</h2>
+
+    <h3>When Are Notifications Created?</h3>
+    <table class="rules-table">
+      <tr><th>Trigger</th><th>Message</th></tr>
+      <tr><td>Admin updates complaint status</td><td>"Your complaint status was updated to Resolved"</td></tr>
+      <tr><td>Admin updates LF item status</td><td>"Your lost/found item status was updated to Found"</td></tr>
+      <tr><td>Keyword match in Lost & Found</td><td>"Possible match found! Check [item title]"</td></tr>
+      <tr><td>Admin broadcasts announcement</td><td>Custom message to all users</td></tr>
+    </table>
+
+    <h3>Firestore Document Structure</h3>
+    <pre>// Collection: notifications
+{
+  message: "Your complaint was marked as Resolved",
+  userId: "uid123",     // Who receives this notification
+  type: "complaint",    // complaint | lostfound | match | info
+  read: false,          // Changes to true when user clicks "Mark read"
+  createdAt: Timestamp
+}</pre>
+  </div>
+
+  <!-- REAL-TIME -->
+  <div class="guide-section" id="realtime">
+    <h2>⚡ Step 7 — Real-Time Updates</h2>
+    <p>Instead of <span class="inline-code">getDocs()</span> (one-time fetch), we use <span class="inline-code">onSnapshot()</span> which fires immediately and again every time data changes in Firestore.</p>
+
+    <h3>Simple Example</h3>
+    <pre>// onSnapshot = "keep watching this collection"
+onSnapshot(query(collection(db, "complaints"), where("userId", "==", uid)), (snapshot) => {
+  // This runs when page loads AND every time data changes
+  const complaints = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderTable(complaints); // Automatically updates the UI
+});</pre>
+
+    <p><strong>Result:</strong> When admin changes a status → user sees the new badge instantly — no page refresh needed!</p>
+
+    <h3>Which files use onSnapshot?</h3>
+    <table class="rules-table">
+      <tr><th>File</th><th>Collection Listened</th></tr>
+      <tr><td>lostfound.js</td><td>lost_found_items</td></tr>
+      <tr><td>complaints.js</td><td>complaints</td></tr>
+      <tr><td>volunteer.js</td><td>volunteers</td></tr>
+      <tr><td>notifications.js</td><td>notifications</td></tr>
+    </table>
+  </div>
+
+  <!-- SECURITY RULES -->
+  <div class="guide-section blue" id="rules">
+    <h2>🔒 Step 8 — Firestore Security Rules</h2>
+    <p>Go to Firestore → Rules tab → paste these rules:</p>
+
+    <pre>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: check if request is from authenticated user
+    function isLoggedIn() {
+      return request.auth != null;
+    }
+
+    // Helper: check if user is admin
+    function isAdmin() {
+      return isLoggedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+
+    // Helper: check if user owns this document
+    function isOwner(userId) {
+      return isLoggedIn() && request.auth.uid == userId;
+    }
+
+    // USERS collection
+    match /users/{userId} {
+      allow read: if isLoggedIn();
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    // LOST & FOUND
+    match /lost_found_items/{docId} {
+      allow read: if isLoggedIn();
+      allow create: if isLoggedIn();
+      allow update: if isAdmin() || isOwner(resource.data.userId);
+      allow delete: if isAdmin();
+    }
+
+    // COMPLAINTS
+    match /complaints/{docId} {
+      allow read: if isLoggedIn();
+      allow create: if isLoggedIn();
+      allow update: if isAdmin();  // Only admin updates status
+      allow delete: if isAdmin();
+    }
+
+    // VOLUNTEERS
+    match /volunteers/{docId} {
+      allow read: if isLoggedIn();
+      allow create: if isLoggedIn();
+      allow update, delete: if isAdmin();
+    }
+
+    // NOTIFICATIONS
+    match /notifications/{docId} {
+      allow read: if isLoggedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isLoggedIn();
+      allow update: if isLoggedIn() && resource.data.userId == request.auth.uid;
+      allow delete: if isAdmin();
+    }
+  }
+}</pre>
+
+    <div class="tip-box">
+      <strong>⚠️ Important:</strong> After publishing rules, test that: (1) Users can only see their own data. (2) Admin can update statuses. (3) Unauthenticated users get denied.
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="guide-section" id="timeline">
+    <h2>⏰ Step 9 — 6-Hour Execution Plan</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="hour-badge green">Hour 1</div>
+        <div class="timeline-content">
+          <strong>Setup Firebase + Project Structure</strong>
+          Create Firebase project → Enable Auth + Firestore → Get config → Paste in firebase.js → Create folder structure → Open index.html in browser.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="hour-badge">Hour 2</div>
+        <div class="timeline-content">
+          <strong>Authentication</strong>
+          Test login page → Test signup → Verify role redirect → Test admin email → Check Firestore "users" collection is populated. Admin can login to admin-dashboard.html.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="hour-badge green">Hour 3</div>
+        <div class="timeline-content">
+          <strong>Lost & Found Module</strong>
+          User submits an item → verify it appears in Firestore → verify it shows in user table → Admin changes status → verify user table updates in real-time → test keyword matching.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="hour-badge">Hour 4</div>
+        <div class="timeline-content">
+          <strong>Complaints Module</strong>
+          Submit a complaint → verify in Firestore → Admin changes status → verify notification appears on user side in real-time. Test all urgency levels and categories.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="hour-badge green">Hour 5</div>
+        <div class="timeline-content">
+          <strong>Volunteer + Notifications</strong>
+          Register for an event → verify in Firestore → check admin sees it → Test notification bell → Test "mark all read" → Test broadcast announcement from admin.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="hour-badge">Hour 6</div>
+        <div class="timeline-content">
+          <strong>Testing + UI Polish + Demo Prep</strong>
+          Full walkthrough of all features → Fix any bugs → Add Security Rules → Prepare your demo script → Practice explaining the data flow to judges.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA FLOW -->
+  <div class="guide-section blue" id="dataflow">
+    <h2>🔄 Step 10 — Data Flow Explanation</h2>
+    <p>Use this to confidently explain to judges how the system works:</p>
+
+    <h3>User Submits a Complaint</h3>
+    <div class="flow-row">
+      <div class="flow-box gray">HTML Form</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box blue">JS validates</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">addDoc() to Firestore</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box gray">Firestore saves</div>
+    </div>
+
+    <h3>Admin Updates Status</h3>
+    <div class="flow-row">
+      <div class="flow-box blue">Admin clicks dropdown</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">updateDoc() in Firestore</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box green">createNotification()</div>
+    </div>
+
+    <h3>User Sees Update (Real-time)</h3>
+    <div class="flow-row">
+      <div class="flow-box gray">Firestore changes</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box blue">onSnapshot() fires</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">renderTable() called</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box green">UI updates instantly</div>
+    </div>
+
+    <h3>Role-Based Redirect</h3>
+    <div class="flow-row">
+      <div class="flow-box gray">User logs in</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box blue">Get role from Firestore</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">role == "admin"?</div>
+    </div>
+    <div class="flow-row" style="margin-left: 20px;">
+      <div class="flow-arrow">✅ Yes →</div>
+      <div class="flow-box blue">admin-dashboard.html</div>
+    </div>
+    <div class="flow-row" style="margin-left: 20px; margin-top: 4px;">
+      <div class="flow-arrow">❌ No →</div>
+      <div class="flow-box green">user-dashboard.html</div>
+    </div>
+
+    <div class="tip-box info" style="margin-top:20px;">
+      <strong>ℹ️ Demo Tip:</strong> Open two browser windows side by side — one as admin, one as user. When admin updates a status, the user window updates instantly. This is your WOW moment! 🎯
+    </div>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  Built for <strong>Saylani Mass IT Hub</strong> Hackathon · Firebase + Vanilla JS · 
+  Green: #66b032 · Blue: #0057a8
+</div>
+
+</body>
+</html>
