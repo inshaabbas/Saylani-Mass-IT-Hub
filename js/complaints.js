@@ -9,7 +9,7 @@ import { showToast } from "./auth.js";
 import { createNotification } from "./notifications.js";
 import {
   collection, addDoc, query, where,
-  onSnapshot, doc, updateDoc, serverTimestamp, getDocs
+  onSnapshot, doc, updateDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // =============================================
@@ -181,10 +181,11 @@ export async function updateComplaintStatus(complaintId, newStatus, ownerId) {
 
     console.log("✅ Status updated successfully");
 
-    // Notify the complaint owner
+    // Notify the complaint owner with short ID
+    const shortId = complaintId.slice(0, 8);
     await createNotification(
       ownerId,
-      `Your complaint status was updated to "${newStatus}".`,
+      `#${shortId} status updated to "${newStatus}".`,
       "complaint"
     );
 

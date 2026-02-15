@@ -1,5 +1,5 @@
 // =============================================
-// lostfound.js – Lost & Found Module
+// lostfound.js – Lost & Found Module  
 // User: Submit items, view own posts
 // Admin: View all, update status
 // Image upload: Cloudinary
@@ -84,7 +84,7 @@ export async function submitLostFoundItem(userId, userName, formData) {
       description: formData.get("description"),
       category: formData.get("category"),
       location: formData.get("location"),
-      type: formData.get("type"),       // "lost" or "found"
+      type: formData.get("type"),
       imageURL: imageURL,
       userId: userId,
       userName: userName,
@@ -113,16 +113,12 @@ export async function submitLostFoundItem(userId, userName, formData) {
 
 // =============================================
 // KEYWORD MATCHING
-// If user posts "Lost Wallet" and another posted
-// "Found Wallet" → send match notification
 // =============================================
 async function checkKeywordMatch(newItemId, newTitle, userId) {
   try {
-    // Extract keywords (words > 3 chars)
     const keywords = newTitle.toLowerCase().split(" ").filter(w => w.length > 3);
     if (keywords.length === 0) return;
 
-    // Get all items except current
     const allItems = await getDocs(collection(db, "lost_found_items"));
 
     allItems.forEach((docSnap) => {
@@ -130,16 +126,13 @@ async function checkKeywordMatch(newItemId, newTitle, userId) {
       const item = docSnap.data();
       const itemTitle = item.title.toLowerCase();
 
-      // Check if any keyword matches
       const matched = keywords.some(kw => itemTitle.includes(kw));
       if (matched) {
-        // Notify the user who posted the new item
         createNotification(
           userId,
           `🔍 Possible match found! "${item.title}" may match your report.`,
           "match"
         );
-        // Also notify the other item's owner
         if (item.userId !== userId) {
           createNotification(
             item.userId,
@@ -156,7 +149,6 @@ async function checkKeywordMatch(newItemId, newTitle, userId) {
 
 // =============================================
 // LISTEN TO USER'S OWN ITEMS (Real-time)
-// onSnapshot → updates immediately when DB changes
 // =============================================
 export function listenUserLostFound(userId, renderFn) {
   console.log("=== SETTING UP USER LOST & FOUND LISTENER ===");
@@ -167,7 +159,6 @@ export function listenUserLostFound(userId, renderFn) {
     where("userId", "==", userId)
   );
 
-  // onSnapshot gives real-time updates
   return onSnapshot(q, 
     (snapshot) => {
       console.log("📨 User L&F Snapshot Received");
@@ -175,7 +166,6 @@ export function listenUserLostFound(userId, renderFn) {
       
       const items = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
       
-      // Sort on client side by createdAt (newest first)
       items.sort((a, b) => {
         const aTime = a.createdAt?.seconds || 0;
         const bTime = b.createdAt?.seconds || 0;
@@ -207,7 +197,6 @@ export function listenAllLostFound(renderFn) {
       
       const items = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
       
-      // Sort on client side
       items.sort((a, b) => {
         const aTime = a.createdAt?.seconds || 0;
         const bTime = b.createdAt?.seconds || 0;
@@ -236,11 +225,12 @@ export async function updateLostFoundStatus(itemId, newStatus, itemOwnerId) {
       status: newStatus
     });
 
-    // Notify the item owner
+    // Notify the item owner with short ID
+    const shortId = itemId.slice(0, 8);
     await createNotification(
       itemOwnerId,
-      `Your lost/found item status was updated to "${newStatus}".`,
-      "status"
+      `#${shortId} status updated to "${newStatus}".`,
+      "lostfound"
     );
 
     console.log("✅ Status updated successfully");
