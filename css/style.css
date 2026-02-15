@@ -580,15 +580,206 @@ textarea.form-control { resize: vertical; min-height: 90px; }
 .status-select:focus { border-color: var(--green); outline: none; }
 
 /* =============================================
-   RESPONSIVE
+   RESPONSIVE — MOBILE FRIENDLY SIDEBAR
    ============================================= */
+
+/* ---- Tablet (768px - 1024px) ---- */
+@media (max-width: 1024px) {
+  /* Sidebar thodi choti karo */
+  :root {
+    --sidebar-width: 180px;
+  }
+
+  /* Nav link text thoda chota */
+  .nav-link {
+    font-size: 0.82rem;
+    padding: 9px 14px;
+    gap: 8px;
+  }
+
+  /* Stats 2 column mein */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Dashboard grids ek column mein */
+  [style*="grid-template-columns: 1fr 320px"],
+  [style*="grid-template-columns: 1fr 340px"],
+  [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ---- Mobile (below 768px) ---- */
 @media (max-width: 768px) {
-  .sidebar { transform: translateX(-100%); transition: transform .3s; }
-  .sidebar.open { transform: translateX(0); }
-  .main-content { margin-left: 0; }
-  .auth-left { display: none; }
-  .auth-right { padding: 32px 24px; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* ✅ Sidebar HIDE nahi hogi — icon-only sidebar banegi */
+  :root {
+    --sidebar-width: 60px;   /* Sirf icons dikhenge */
+  }
+
+  /* Sidebar slim ho jae */
+  .sidebar {
+    width: 60px;
+    overflow: hidden;
+    transition: width .25s ease;
+  }
+
+  /* Sidebar logo area chhupa do text */
+  .sidebar-logo {
+    padding: 14px 10px;
+    justify-content: center;
+  }
+  .sidebar-logo svg {
+    /* Sirf icon wala part dikhao */
+    width: 36px;
+    height: 26px;
+    overflow: hidden;
+  }
+
+  /* Nav links: sirf icon center mein */
+  .nav-link {
+    padding: 12px 0;
+    justify-content: center;
+    gap: 0;
+    font-size: 0;          /* Text hide karo */
+    position: relative;
+  }
+  .nav-link svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Section label chupa do */
+  .nav-section-label {
+    display: none;
+  }
+
+  /* Sidebar footer slim karo */
+  .sidebar-footer {
+    padding: 10px 6px;
+  }
+  .sidebar-user {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  /* User name aur role text hide karo */
+  .sidebar-user > div:last-child {
+    display: none;
+  }
+  /* Logout button: sirf ek icon/short form */
+  .sidebar-footer .btn-outline {
+    font-size: 0;          /* Text hide */
+    padding: 6px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  /* Logout button pe X icon lagao */
+  .sidebar-footer .btn-outline::after {
+    content: "✕";
+    font-size: 0.8rem;
+    color: var(--gray-700);
+  }
+
+  /* Main content sidebar ke saath align rahe */
+  .main-content {
+    margin-left: 60px;   /* Sidebar width ke barabar */
+  }
+
+  /* Page content padding kam karo */
+  .page-content {
+    padding: 14px;
+  }
+
+  /* Topbar adjust */
+  .topbar {
+    padding: 0 14px;
+  }
+  .topbar-title {
+    font-size: 0.9rem;
+  }
+
+  /* Stats: 2 column grid */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .stat-card {
+    padding: 14px 12px;
+  }
+  .stat-card .stat-value {
+    font-size: 1.3rem;
+  }
+
+  /* Dashboard inline grid → single column */
+  [style*="grid-template-columns: 1fr 320px"],
+  [style*="grid-template-columns: 1fr 340px"],
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns: 1fr 2fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tables scroll honi chahiye horizontal */
+  .table-custom {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Card panels padding */
+  .card-panel {
+    padding: 14px 14px;
+  }
+
+  /* Auth pages: left panel hide */
+  .auth-left {
+    display: none;
+  }
+  .auth-right {
+    padding: 28px 20px;
+  }
+
+  /* Filter bar wrap ho jae */
+  .filter-bar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .filter-bar .form-control {
+    max-width: 100%;
+    flex: 1;
+  }
+
+  /* Broadcast input + button stack ho jae */
+  [style*="display:flex; gap:10px"] {
+    flex-direction: column !important;
+  }
+}
+
+/* ---- Very small screens (below 480px) ---- */
+@media (max-width: 480px) {
+  /* Stats: 2 column stay */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .stat-card .stat-value {
+    font-size: 1.1rem;
+  }
+  .stat-card .stat-label {
+    font-size: 0.7rem;
+  }
+
+  /* Topbar user name hide karo */
+  #topbarUser {
+    display: none;
+  }
 }
 
 /* =============================================
