@@ -1,9 +1,3 @@
-// =============================================
-// userDashboard.js — User Dashboard Controller
-// Controls all sections in user-dashboard.html
-// Imports all modules and wires up UI
-// =============================================
-
 import { auth, db } from "./firebase.js";
 import { protectPage, logoutUser, showToast } from "./auth.js";
 import {

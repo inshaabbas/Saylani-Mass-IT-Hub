@@ -1,11 +1,3 @@
-// =============================================
-// lostfound.js – Lost & Found Module  
-// User: Submit items, view own posts
-// Admin: View all, update status
-// Image upload: Cloudinary
-// Also handles keyword matching for notifications
-// =============================================
-
 import { db } from "./firebase.js";
 import { showToast } from "./auth.js";
 import { createNotification } from "./notifications.js";

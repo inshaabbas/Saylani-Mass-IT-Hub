@@ -1,7 +1,3 @@
-// =============================================
-// adminDashboard.js — Admin Dashboard Controller
-// =============================================
-
 import { auth, db } from "./firebase.js";
 import { protectPage, logoutUser, showToast } from "./auth.js";
 import {

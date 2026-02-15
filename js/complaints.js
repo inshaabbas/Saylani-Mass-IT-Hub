@@ -1,9 +1,3 @@
-// =============================================
-// complaints.js – Complaints Module
-// User: Submit complaints, view own
-// Admin: View all, update status
-// =============================================
-
 import { db } from "./firebase.js";
 import { showToast } from "./auth.js";
 import { createNotification } from "./notifications.js";

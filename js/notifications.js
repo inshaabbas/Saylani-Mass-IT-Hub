@@ -1,9 +1,3 @@
-// =============================================
-// notifications.js – Notifications System
-// Creates and listens to notifications in real-time
-// Used by: lostfound.js, complaints.js, volunteer.js
-// =============================================
-
 import { db } from "./firebase.js";
 import {
   collection, addDoc, query, where,

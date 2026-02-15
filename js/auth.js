@@ -1,8 +1,3 @@
-// =============================================
-// auth.js — Authentication Logic
-// Handles: Login, Signup, Role Check, Redirect
-// =============================================
-
 import { auth, db } from "./firebase.js";
 import {
   createUserWithEmailAndPassword,

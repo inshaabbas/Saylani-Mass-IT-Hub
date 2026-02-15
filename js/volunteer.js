@@ -1,9 +1,3 @@
-// =============================================
-// volunteer.js – Volunteer Registration Module
-// User: Register for events
-// Admin: View all registrations in table
-// =============================================
-
 import { db } from "./firebase.js";
 import { showToast } from "./auth.js";
 import {
