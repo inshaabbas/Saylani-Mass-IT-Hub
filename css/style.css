@@ -96,7 +96,7 @@ img { max-width: 100%; }
   position: absolute; top: 36px; left: 40px;
   z-index: 2;
 }
-.auth-left .brand-logo img { height: 38px; }
+.auth-left .brand-logo img { height: 58px; }
 .auth-left h2 {
   color: var(--white);
   font-size: 1.7rem;
